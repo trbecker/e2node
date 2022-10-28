@@ -1,6 +1,6 @@
 #ifndef __value_h__
 #define __value_h__
-#include "types.h"
+#include <types.h>
 namespace E2Node {
 class Value {
 public:

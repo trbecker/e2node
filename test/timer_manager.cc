@@ -1,4 +1,4 @@
-#include "../src/timer_manager.h"
+#include <timer_manager.h>
 #include <gtest/gtest.h>
 #include <cstring>
 

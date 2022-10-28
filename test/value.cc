@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/value_generator.h"
+#include <value_generator.h>
 
 class FixedValue : public ::E2Node::Value {
 public:
