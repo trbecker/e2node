@@ -6,7 +6,7 @@ namespace E2NodeSimulator {
 E2NodeConstructor::E2NodeConstructor(std::string filename) :
 	config(YAML::LoadFile(filename)) { }
 
-void E2NodeConstructor::getValues(std::list<E2Node::Value *>& values)
+void E2NodeConstructor::getValues(std::list<std::shared_ptr<E2Node::Value> >& values)
 {
 	std::string scalar;
 
@@ -21,7 +21,7 @@ void E2NodeConstructor::getValues(std::list<E2Node::Value *>& values)
 			int range_end = value_conf["uniform_distribution"]["range_end"].as<int>();
 
 			E2Node::Value *v = new RandomValue(value_name, range_start, range_end);
-			values.push_back(v);
+			values.push_back(std::shared_ptr<E2Node::Value>(v));
 		}
 
 		if (value_conf["normal_distribution"]) {
@@ -29,14 +29,14 @@ void E2NodeConstructor::getValues(std::list<E2Node::Value *>& values)
 			double standard_deviation = value_conf["normal_distribution"]["standard_deviation"].as<double>();
 
 			E2Node::Value *v = new NormalValue(value_name, mean, standard_deviation);
-			values.push_back(v);
+			values.push_back(std::shared_ptr<E2Node::Value>(v));
 
 		}
 
 		if (value_conf["constant"]) {
 			int value = value_conf["constant"]["value"].as<int>();
 			E2Node::Value *v = new ConstantValue(value_name, value);
-			values.push_back(v);
+			values.push_back(std::shared_ptr<E2Node::Value>(v));
 		}
 	}
 }
