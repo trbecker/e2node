@@ -1,0 +1,13 @@
+node:
+  values:
+    value1:
+      uniform_distribution:
+        range_start: 0
+        range_end: 5000
+    value2:
+      normal_distribution:
+        mean: 2500
+        standard_deviation: 250
+    value3:
+      constant:
+        value: 134
