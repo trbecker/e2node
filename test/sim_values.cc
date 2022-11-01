@@ -45,6 +45,8 @@ TEST(RandomValueTest, Test)
 	// Check if all values are covered (there's a small chance that this fails)
 	for(int i = MRAND_MIN; i <= MRAND_MAX; i++)
 		CHECK_VALUE_IN_SEQUENCE(values, i, TEST_REPEATS);
+
+	free(values);
 }
 
 // This is a harder test, we should test for properties of the normal distribution
