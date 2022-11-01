@@ -1,7 +1,14 @@
 #!/bin/bash
 
+function run_test {
+	if [[ ${VALGRIND} == "y" ]] ; then
+		valgrind="valgrind --tool=memcheck"
+	fi
+	$valgrind $1
+}
+
 for test in $(ls test/*_test) ; do
 	echo Running ${test}
-	${test}
+	run_test ${test}
 	echo
 done
