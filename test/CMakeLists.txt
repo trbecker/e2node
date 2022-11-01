@@ -1,5 +1,7 @@
 set(CMAKE_CXX_FLAGS "-DTESTING")
 
+configure_file("test_runner" ${CMAKE_BINARY_DIR} COPYONLY)
+
 add_executable(timer_manager_test ../src/timer_manager.cc timer_manager.cc)
 target_link_libraries(timer_manager_test gtest)
 

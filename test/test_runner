@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for test in $(ls test/*_test) ; do
+	echo Running ${test}
+	${test}
+	echo
+done
