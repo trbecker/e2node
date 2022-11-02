@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DOCKER=${DOCKER:-docker}
+
+src_vol=${PWD}:/src
+if [[ ${DOCKER} == "podman" ]] ; then
+	src_vol=${src_vol}:z
+fi
+
+${DOCKER} run -it -v ${src_vol} e2node_tester:latest
