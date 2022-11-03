@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 if [ -f $HOME/.e2node-tester.conf ] ; then
 	source $HOME/.e2node-tester.conf
@@ -33,4 +33,11 @@ if [ -z "$@" ] ; then
 	unmount_volume e2node_ci_results
 	${DOCKER} volume export e2node_ci_results | gzip > ${COPY_PATH}/results-volume.gz
 	${DOCKER} volume rm e2node_ci_results
+
+	echo "============= SUMMARY ============="
+	echo "========== CODE COVERAGE =========="
+	cat ${COPY_PATH}/gcovr-summary.txt
+	echo
+	echo "========== MEMORY LEAKS ==========="
+	sed -n '/<errorcounts>/,/<\/errorcounts>/p' ${COPY_PATH}/valgrind-result.xml
 fi
