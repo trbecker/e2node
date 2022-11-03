@@ -1,10 +1,36 @@
-#!/bin/bash
+#!/bin/bash -x
+
+if [ -f $HOME/.e2node-tester.conf ] ; then
+	source $HOME/.e2node-tester.conf
+elif [ -f .e2node-tester.conf ] ; then
+	source e2node-tester.conf
+fi
 
 DOCKER=${DOCKER:-docker}
+
+function mount_volume {
+	${DOCKER} unshare ${DOCKER} volume mount ${1}
+}
+
+function unmount_volume {
+	${DOCKER} unshare ${DOCKER} volume unmount ${1}
+}
 
 src_vol=${PWD}:/src
 if [[ ${DOCKER} == "podman" ]] ; then
 	src_vol=${src_vol}:z
 fi
 
-${DOCKER} run -it -v ${src_vol} e2node_tester:latest
+${DOCKER} volume create e2node_ci_results
+${DOCKER} run --rm -it -v ${src_vol} -v e2node_ci_results:/results:z e2node_tester:latest $@
+
+# For automated tests, save the results
+if [ -z "$@" ] ; then
+	MNT_PATH=$(mount_volume e2node_ci_results)
+	COPY_PATH=${TEST_OUTPUT_DIR}/results/$(date -Iseconds)
+	mkdir -p ${COPY_PATH}
+	cp -r $MNT_PATH/* ${COPY_PATH}
+	unmount_volume e2node_ci_results
+	${DOCKER} volume export e2node_ci_results | gzip > ${COPY_PATH}/results-volume.gz
+	${DOCKER} volume rm e2node_ci_results
+fi
