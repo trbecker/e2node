@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/bash -x
 
 function run_test {
 	if [[ ${VALGRIND} == "y" ]] ; then
-		valgrind="valgrind --tool=memcheck"
+		valgrind="valgrind --tool=memcheck --xml=yes --xml-file=valgrind-result.xml --demangle=yes"
 	fi
 	$valgrind $1
 }
