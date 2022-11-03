@@ -1,6 +1,12 @@
 #include <gtest/gtest.h>
 #include <value_generator.h>
 
+namespace E2Node {
+ValueMap& getValueGeneratorInternalMap(ValueGenerator *gen) {
+	return gen->valueMap;
+}
+} /* namespace E2Node */
+
 class FixedValue : public ::E2Node::Value {
 public:
 	FixedValue(value_name_t name, int value) : value(value), Value(name) { }
@@ -38,10 +44,4 @@ TEST_F(ValueGeneratorTest, TestValueAdd) {
 	E2Node::ValueMap &vm = E2Node::getValueGeneratorInternalMap(this->valueGen);
 	EXPECT_EQ(vm.size(), 1);
 	EXPECT_EQ(vm["test_1"].get(), value);
-}
-	
-
-int main(int argc, char **argv) {
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
 }

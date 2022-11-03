@@ -2,6 +2,12 @@
 #include <gtest/gtest.h>
 #include <cstring>
 
+namespace TimerManager {
+std::map<int, Timer *>& getInternalMap(TimerManager *manager) {
+	return manager->timers;
+}
+} /* namespace TimerManager */
+
 class TimerManagerTest : public ::testing::Test {
 protected:
 	void SetUp() override;
@@ -36,11 +42,6 @@ TEST_F(TimerManagerTest, TestCreateGetDelete) {
 
 	EXPECT_NO_THROW(tm->deleteTimer(fd));
 }
-
-//TEST_F(TimerManagerTest, TestGetThrowsIfNoData) {
-//	ASSERT_FALSE(tm == NULL);
-//	EXPECT_ANY_THROW(tm->getTimerData(3));
-//}
 
 TEST_F(TimerManagerTest, TestSeveralInsertsAndDeletes) {
 	ASSERT_FALSE(tm == NULL);
@@ -84,9 +85,4 @@ TEST_F(TimerManagerTest, TestSeveralInsertsAndDeletes) {
 	EXPECT_STREQ((char *)tm->getTimerData(fd3), data3);
 
 	EXPECT_NO_THROW(tm->deleteTimer(fd3));
-}
-
-int main(int argc, char **argv) {
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
 }

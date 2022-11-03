@@ -99,10 +99,4 @@ void *TimerManager::getTimerData(int fd)
 {
 	return timers[fd]->timerData;
 }
-
-#ifdef TESTING
-std::map<int, Timer *>& getInternalMap(TimerManager *manager) {
-	return manager->timers;
-}
-#endif
 } /* namesapce TimerManager */
