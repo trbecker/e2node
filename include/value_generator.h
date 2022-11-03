@@ -14,7 +14,6 @@ using ValueMap = std::map<value_name_t, std::shared_ptr<Value>>;
 class ValueGenerator {
 public:
 	ValueGenerator();
-	ValueGenerator(ValueGenerator& other);
 	virtual ~ValueGenerator();
 
 	void addValue(Value *value);

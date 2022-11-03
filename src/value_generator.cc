@@ -4,11 +4,6 @@ namespace E2Node {
 
 ValueGenerator::ValueGenerator() : valueMap() { }
 
-ValueGenerator::ValueGenerator(ValueGenerator& other)
-{
-	// Copy constructor
-}
-
 ValueGenerator::~ValueGenerator()
 {
 	// Empty	
