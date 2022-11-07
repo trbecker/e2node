@@ -2,6 +2,7 @@
 #define __value_generator_h__
 #include <map>
 #include <memory>  /* std::shared_ptr */
+#include <list>
 
 #include <value.h>
 #include "types.h"
@@ -17,6 +18,7 @@ public:
 	virtual ~ValueGenerator();
 
 	void addValue(Value *value);
+	void getValues(const std::list<value_name_t>&, std::map<value_name_t, int>&);
 
 private:
 	ValueMap valueMap;
