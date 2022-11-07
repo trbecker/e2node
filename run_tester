@@ -7,6 +7,12 @@ elif [ -f .e2node-tester.conf ] ; then
 fi
 
 DOCKER=${DOCKER:-docker}
+if [[ $(which ${DOCKER} 2>&1 1>/dev/null) ]] ; then
+	echo "${DOCKER} unavailable in the system path."
+	echo "Try setting the DOCKER environment variable to a docker implementation."
+	echo "DOCKER=/path/to/docker_or_podman ${0} ${@}"
+	exit 1
+fi
 
 function mount_volume {
 	${DOCKER} unshare ${DOCKER} volume mount ${1}
@@ -21,8 +27,14 @@ if [[ ${DOCKER} == "podman" ]] ; then
 	src_vol=${src_vol}:z
 fi
 
+${DOCKER} image exists e2node_tester
+[[ $? -eq 1 ]] && exit 1
+
 ${DOCKER} volume create e2node_ci_results
 ${DOCKER} run --rm -it -v ${src_vol} -v e2node_ci_results:/results:z e2node_tester:latest $@
+[[ $? -eq 1 ]] && exit 1
+
+echo Result of the docker run $?
 
 # For automated tests, save the results
 if [ -z "$@" ] ; then

@@ -4,7 +4,7 @@ cd /build
 cmake /src -DTESTING=1
 make
 VALGRIND=y ./test_runner
-gcov -mpc $(find . -name \*.o)
+gcov -mpc $(find . -name \*.o) > /dev/null
 gcovr -r /src . > gcovr-summary.txt
 gcovr -r /src . --json > gcovr-full.json
 cp --parents $(find . -name \*.gcov) /results
