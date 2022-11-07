@@ -34,8 +34,6 @@ ${DOCKER} volume create e2node_ci_results
 ${DOCKER} run --rm -it -v ${src_vol} -v e2node_ci_results:/results:z e2node_tester:latest $@
 [[ $? -eq 1 ]] && exit 1
 
-echo Result of the docker run $?
-
 # For automated tests, save the results
 if [ -z "$@" ] ; then
 	MNT_PATH=$(mount_volume e2node_ci_results)
