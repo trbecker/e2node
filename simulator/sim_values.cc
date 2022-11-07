@@ -1,6 +1,6 @@
 #include "sim_values.h"
 
-namespace E2NodeSimulator {
+namespace e2simulator {
 
 static std::default_random_engine generator;
 
@@ -30,4 +30,4 @@ int NormalValue::getValue()
 	return (int)this->_distribution(generator);
 }
 
-} /* namespace E2NodeSimulator */
+} /* namespace e2simulator */

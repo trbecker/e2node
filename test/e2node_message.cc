@@ -1,9 +1,9 @@
 #include <sstream>
-#include <e2node_message.h>
+#include <e2node/message.h>
 #include <gtest/gtest.h>
 
 TEST(MessageTest, ContructorAndDestructor) {
 	std::stringstream *string = new std::stringstream("Hello, World!");
-	E2Node::Message *message1 = new E2Node::Message(string);
+	e2node::Message *message1 = new e2node::Message(string);
 	delete message1;
 }

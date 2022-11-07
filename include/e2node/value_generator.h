@@ -1,14 +1,14 @@
-#ifndef __value_generator_h__
-#define __value_generator_h__
+#ifndef __e2node_value_generator_h__
+#define __e2node_value_generator_h__
 #include <map>
 #include <memory>  /* std::shared_ptr */
 #include <list>
 
-#include <value.h>
-#include "types.h"
+#include <e2node/value.h>
+#include <e2node/types.h>
 
 
-namespace E2Node {
+namespace e2node {
 
 using ValueMap = std::map<value_name_t, std::shared_ptr<Value>>;
 
@@ -31,5 +31,5 @@ private:
 ValueMap& getValueGeneratorInternalMap(ValueGenerator *);
 #endif
 
-} /* namespace E2Node */
-#endif /* __value_generator_h__ */
+} /* namespace e2node */
+#endif /* __e2node_value_generator_h__ */

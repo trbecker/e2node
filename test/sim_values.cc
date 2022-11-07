@@ -15,7 +15,7 @@ do { \
 
 TEST(ConstantValueTest, Test)
 {
-	E2NodeSimulator::ConstantValue v("constant", 5);
+	e2simulator::ConstantValue v("constant", 5);
 	ASSERT_EQ(v.getValue(), 5);
 	ASSERT_STREQ(v.name.c_str(), "constant");
 }
@@ -26,7 +26,7 @@ TEST(ConstantValueTest, Test)
 
 TEST(RandomValueTest, Test)
 {
-	E2NodeSimulator::RandomValue v("random", MRAND_MIN, MRAND_MAX);
+	e2simulator::RandomValue v("random", MRAND_MIN, MRAND_MAX);
 	int *values = (int *)calloc(TEST_REPEATS, sizeof(int));
 
 	for(int i = 0; i < TEST_REPEATS; i++) {
@@ -53,7 +53,7 @@ TEST(RandomValueTest, Test)
 // For the time being, test just the basics.
 TEST(NormalValueTest, Test)
 {
-	E2NodeSimulator::NormalValue v("normal", 10, 2);
+	e2simulator::NormalValue v("normal", 10, 2);
 	for(int i = 0; i < TEST_REPEATS; i++) {
 		int _v = v.getValue();
 #ifdef PRINT_GENERATED_VALUES

@@ -1,10 +1,10 @@
-#include <e2node_message.h>
+#include <e2node/message.h>
 
-namespace E2Node {
+namespace e2node {
 
 Message::Message(void *_data) : data(_data) {}
 Message::~Message() {
 	delete this->data;
 }
 
-} /* namespace E2Node */
+} /* namespace e2node */

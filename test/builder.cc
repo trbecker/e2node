@@ -3,9 +3,9 @@
 
 TEST(BuilderTest, Test)
 {
-	using value_iterator = std::list<std::shared_ptr<E2Node::Value>>::iterator;
-	E2NodeSimulator::E2NodeConstructor builder("node_config_1.yaml");
-	std::list<std::shared_ptr<E2Node::Value>> values;
+	using value_iterator = std::list<std::shared_ptr<e2node::Value>>::iterator;
+	e2simulator::E2NodeConstructor builder("node_config_1.yaml");
+	std::list<std::shared_ptr<e2node::Value>> values;
 	std::list<std::string> expected_values({ "value1", "value2",
 		"value3"});
 

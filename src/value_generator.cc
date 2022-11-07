@@ -1,6 +1,6 @@
-#include <value_generator.h>
+#include <e2node/value_generator.h>
 
-namespace E2Node {
+namespace e2node {
 
 ValueGenerator::ValueGenerator() : valueMap() { }
 
@@ -22,4 +22,4 @@ void ValueGenerator::getValues(const std::list<value_name_t>& names, std::map<va
 		result.insert({ *it, v->getValue() });
 	}
 }
-} /* namespace E2Node */
+} /* namespace e2node */

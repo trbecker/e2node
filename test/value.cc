@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
-#include <value_generator.h>
+#include <e2node/value_generator.h>
 
-namespace E2Node {
+namespace e2node {
 ValueMap& getValueGeneratorInternalMap(ValueGenerator *gen) {
 	return gen->valueMap;
 }
-} /* namespace E2Node */
+} /* namespace e2node */
 
-class FixedValue : public ::E2Node::Value {
+class FixedValue : public ::e2node::Value {
 public:
 	FixedValue(value_name_t name, int value) : value(value), Value(name) { }
 
@@ -22,11 +22,11 @@ class ValueGeneratorTest : public ::testing::Test {
 protected:
 	void SetUp() override;
 	void TearDown() override;
-	E2Node::ValueGenerator *valueGen;
+	e2node::ValueGenerator *valueGen;
 };
 
 void ValueGeneratorTest::SetUp() {
-	this->valueGen = new E2Node::ValueGenerator;
+	this->valueGen = new e2node::ValueGenerator;
 }
 
 void ValueGeneratorTest::TearDown() {
@@ -34,20 +34,20 @@ void ValueGeneratorTest::TearDown() {
 }
 
 TEST_F(ValueGeneratorTest, TestInitialConditions) {
-	EXPECT_TRUE(E2Node::getValueGeneratorInternalMap(this->valueGen).empty());
+	EXPECT_TRUE(e2node::getValueGeneratorInternalMap(this->valueGen).empty());
 }
 
 TEST_F(ValueGeneratorTest, TestValueAdd) {
-	E2Node::Value *value = new FixedValue("test_1", 5);
+	e2node::Value *value = new FixedValue("test_1", 5);
 	EXPECT_EQ(value->getValue(), 5);
 	EXPECT_NO_THROW({ valueGen->addValue(value); });
-	E2Node::ValueMap &vm = E2Node::getValueGeneratorInternalMap(this->valueGen);
+	e2node::ValueMap &vm = e2node::getValueGeneratorInternalMap(this->valueGen);
 	EXPECT_EQ(vm.size(), 1);
 	EXPECT_EQ(vm["test_1"].get(), value);
 }
 
 TEST_F(ValueGeneratorTest, TestGetValues) {
-	E2Node::Value *value1, *value2, *value3;
+	e2node::Value *value1, *value2, *value3;
 	value1 = new FixedValue("value1", 1);
 	value2 = new FixedValue("value2", 2);
 	value3 = new FixedValue("value3", 3);
@@ -71,7 +71,7 @@ TEST_F(ValueGeneratorTest, TestGetValues) {
 }
 
 TEST(ValueGeneratorTest2, TestFailGetValue) {
-	E2Node::ValueGenerator vg;
+	e2node::ValueGenerator vg;
 	std::list<value_name_t> names({ "nonexistant" });
 	std::map<value_name_t, int> values;
 	EXPECT_NO_THROW({ vg.getValues(names, values); });

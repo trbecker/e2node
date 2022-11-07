@@ -1,8 +1,10 @@
+#ifndef __e2node_timer_manager__
+#define __e2node_timer_manager__
 #include <sys/timerfd.h>
 #include <unistd.h>
 #include <map>
 
-namespace TimerManager {
+namespace e2node {
 
 class TimerManager;
 
@@ -40,4 +42,5 @@ private:
 #ifdef TESTING
 std::map<int, Timer *>& getInternalMap(TimerManager *);
 #endif
-} /* namespace TimerManager */
+} /* namespace e2node */
+#endif /* __e2node_timer_manager__ */

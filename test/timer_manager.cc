@@ -1,23 +1,23 @@
-#include <timer_manager.h>
+#include <e2node/timer_manager.h>
 #include <gtest/gtest.h>
 #include <cstring>
 
-namespace TimerManager {
+namespace e2node {
 std::map<int, Timer *>& getInternalMap(TimerManager *manager) {
 	return manager->timers;
 }
-} /* namespace TimerManager */
+} /* namespace e2node */
 
 class TimerManagerTest : public ::testing::Test {
 protected:
 	void SetUp() override;
 	void TearDown() override;
 
-	TimerManager::TimerManager *tm;
+	e2node::TimerManager *tm;
 };
 
 void TimerManagerTest::SetUp() {
-	tm = new TimerManager::TimerManager;
+	tm = new e2node::TimerManager;
 }
 
 void TimerManagerTest::TearDown() {
@@ -25,7 +25,7 @@ void TimerManagerTest::TearDown() {
 }
 
 TEST_F(TimerManagerTest, TestInitialConditions) {
-	EXPECT_TRUE(TimerManager::getInternalMap(tm).empty());
+	EXPECT_TRUE(e2node::getInternalMap(tm).empty());
 }
 
 TEST_F(TimerManagerTest, TestCreateGetDelete) {
@@ -61,9 +61,9 @@ TEST_F(TimerManagerTest, TestSeveralInsertsAndDeletes) {
 	EXPECT_GE(fd3, 0);
 
 	EXPECT_EQ(getInternalMap(tm).size(), 3);
-	EXPECT_NE(getInternalMap(tm)[fd1], (TimerManager::Timer *)NULL);
-	EXPECT_NE(getInternalMap(tm)[fd2], (TimerManager::Timer *)NULL);
-	EXPECT_NE(getInternalMap(tm)[fd3], (TimerManager::Timer *)NULL);
+	EXPECT_NE(getInternalMap(tm)[fd1], (e2node::Timer *)NULL);
+	EXPECT_NE(getInternalMap(tm)[fd2], (e2node::Timer *)NULL);
+	EXPECT_NE(getInternalMap(tm)[fd3], (e2node::Timer *)NULL);
 
 	EXPECT_STREQ((char *)tm->getTimerData(fd1), data1);
 	EXPECT_STREQ((char *)tm->getTimerData(fd2), data2);
@@ -72,8 +72,8 @@ TEST_F(TimerManagerTest, TestSeveralInsertsAndDeletes) {
 	EXPECT_NO_THROW(tm->deleteTimer(fd1));
 
 	EXPECT_EQ(getInternalMap(tm).size(), 2);
-	EXPECT_NE(getInternalMap(tm)[fd2], (TimerManager::Timer *)NULL);
-	EXPECT_NE(getInternalMap(tm)[fd3], (TimerManager::Timer *)NULL);
+	EXPECT_NE(getInternalMap(tm)[fd2], (e2node::Timer *)NULL);
+	EXPECT_NE(getInternalMap(tm)[fd3], (e2node::Timer *)NULL);
 
 	EXPECT_STREQ((char *)tm->getTimerData(fd2), data2);
 	EXPECT_STREQ((char *)tm->getTimerData(fd3), data3);
@@ -81,7 +81,7 @@ TEST_F(TimerManagerTest, TestSeveralInsertsAndDeletes) {
 	EXPECT_NO_THROW(tm->deleteTimer(fd2));
 
 	EXPECT_EQ(getInternalMap(tm).size(), 1);
-	EXPECT_NE(getInternalMap(tm)[fd3], (TimerManager::Timer *)NULL);
+	EXPECT_NE(getInternalMap(tm)[fd3], (e2node::Timer *)NULL);
 	EXPECT_STREQ((char *)tm->getTimerData(fd3), data3);
 
 	EXPECT_NO_THROW(tm->deleteTimer(fd3));

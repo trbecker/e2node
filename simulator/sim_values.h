@@ -1,11 +1,11 @@
 #ifndef __e2node_simluator_values_h__
 #define __e2node_simluator_values_h__
 #include <random>
-#include <value_generator.h>
+#include <e2node/value_generator.h>
 
-using E2Node::Value;
+using e2node::Value;
 
-namespace E2NodeSimulator {
+namespace e2simulator {
 class ConstantValue : public Value {
 public:
 	ConstantValue(value_name_t name, int value);
@@ -46,6 +46,6 @@ public:
 private:
 	std::normal_distribution<double> _distribution;
 };
-} /* namespace E2NodeSimulator */
+} /* namespace e2simulator */
 
 #endif /* __e2node_simluator_values_h__ */

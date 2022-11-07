@@ -1,6 +1,6 @@
 #ifndef __e2node_message__
 #define __e2node_message__
-namespace E2Node {
+namespace e2node {
 class Message {
 public:
 	/**
@@ -12,5 +12,5 @@ public:
 private:
 	void *data;
 }; /* class Message */
-} /* namespace E2Node */
+} /* namespace e2node */
 #endif /* __e2node_message__ */

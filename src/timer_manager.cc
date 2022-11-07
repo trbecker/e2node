@@ -1,4 +1,4 @@
-#include <timer_manager.h>
+#include <e2node/timer_manager.h>
 #include <cstdlib>
 #include <cerrno>
 #include <cstring>
@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-namespace TimerManager {
+namespace e2node {
 class TimerException : std::exception {
 public:
 	TimerException(const char *err);
@@ -99,4 +99,4 @@ void *TimerManager::getTimerData(int fd)
 {
 	return timers[fd]->timerData;
 }
-} /* namesapce TimerManager */
+} /* namesapce e2node */

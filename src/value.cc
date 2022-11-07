@@ -1,5 +1,5 @@
-#include <value.h>
+#include <e2node/value.h>
 
-namespace E2Node {
+namespace e2node {
 Value::Value(value_name_t name) : name(name) { }
-} /* namespace E2Node */
+} /* namespace e2node */
