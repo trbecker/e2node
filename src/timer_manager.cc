@@ -7,7 +7,7 @@
 
 
 namespace e2node {
-class TimerException : std::exception {
+class TimerException : public std::exception {
 public:
 	TimerException(const char *err);
 	const char *what();
@@ -60,7 +60,7 @@ int TimerManager::createTimer(struct itimerspec *timerSpec, void *timerData) noe
 	 */
 	int fd = timerfd_create(CLOCK_MONOTONIC, 0);
 	if (fd < 0) {
-		throw TimerException(strerror(errno));
+		throw TimerException(strerror(errno)); // GCOVR_EXCL_LINE
 	}
 
 	Timer *timer = new Timer(timerSpec, timerData, fd);
