@@ -40,13 +40,13 @@ sctp_socket::~sctp_socket()
 		close(this->_socket);
 }
 
-void sctp_socket::connect(const std::string &address, const int port)
+void sctp_socket::connect(const sock_info &info)
 {
 	struct sockaddr_in peer;
 	memset(&peer, 0, sizeof(struct sockaddr_in));
 	peer.sin_family = AF_INET;
-	peer.sin_port = htons(port);
-	peer.sin_addr.s_addr = inet_addr(address.c_str());
+	peer.sin_port = htons(info.port);
+	peer.sin_addr.s_addr = inet_addr(info.addr.c_str());
 
 	if (::connect(this->_socket, (struct sockaddr *)&peer, sizeof(peer)) == -1)
 		throw sctp_exception(errno);  // GCOVR_EXCL_LINE
@@ -54,18 +54,18 @@ void sctp_socket::connect(const std::string &address, const int port)
 	up = true; // GCOVR_EXCL_LINE needs a server or a mockup connect
 }
 
-void sctp_socket::bind(const std::string &address, int port)
+void sctp_socket::bind(const sock_info &info)
 {
 	struct sockaddr_in addr;
 
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
-	addr.sin_port = htons(port);
+	addr.sin_port = htons(info.port);
 
-	if (address == addr_any)
+	if (info.addr == addr_any)
 		addr.sin_addr.s_addr = INADDR_ANY;
 	else
-		addr.sin_addr.s_addr = inet_addr(address.c_str());
+		addr.sin_addr.s_addr = inet_addr(info.addr.c_str());
 
 	if (::bind(this->_socket, (struct sockaddr *)&addr, sizeof(addr)) == -1)
 		throw sctp_exception(errno); // GCOVR_EXCL_LINE

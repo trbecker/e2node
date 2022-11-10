@@ -5,14 +5,16 @@
 TEST(SctpSocketTest, TestNoConnection)
 {
 	e2node::sctp_socket sock;
-	EXPECT_THROW({ sock.connect("127.0.0.1", 10000); }, std::exception);
+	e2node::sock_info info("127.0.0.1", 10000);
+	EXPECT_THROW({ sock.connect(info); }, std::exception);
 }
 
 TEST(SctpSocketTest, TestConectException)
 {
 	e2node::sctp_socket sock;
+	e2node::sock_info info("127.0.0.1", 10000);
 	try {
-		sock.connect("127.0.0.1", 10000);
+		sock.connect(info);
 	} catch (std::exception& e) {
 		std::cerr << e.what() << std::endl;
 		SUCCEED();
@@ -36,6 +38,7 @@ TEST(SctpSocketTest, TestSendException)
 		SUCCEED();
 		return;
 	}
+	FAIL();
 }
 
 TEST(SctpSocketTest, TestRecvNoConnection)
@@ -55,6 +58,7 @@ TEST(SctpSocketTest, TestRecvException)
 		SUCCEED();
 		return;
 	}
+	FAIL();
 }
 
 TEST(SctpSocketTest, TestSetOptionsNoConnection)
@@ -69,7 +73,8 @@ TEST(SctpSocketTest, TestSetOptionsNoConnection)
 TEST(SctpSocketTest, TestBindAndSetOptions_any)
 {
 	e2node::sctp_socket sock;
-	sock.bind("any", 3116);
+	e2node::sock_info info("any", 3116);
+	sock.bind(info);
 	EXPECT_NO_THROW({ sock.set_reuse_port(true); });
 	EXPECT_NO_THROW({ sock.set_reuse_port(false); });
 	EXPECT_NO_THROW({ sock.set_reuse_address(true); });
@@ -79,7 +84,8 @@ TEST(SctpSocketTest, TestBindAndSetOptions_any)
 TEST(SctpSocketTest, TestBindAndSetOptions_localhost)
 {
 	e2node::sctp_socket sock;
-	sock.bind("127.0.0.1", 3116);
+	e2node::sock_info info("127.0.0.1", 3116);
+	sock.bind(info);
 	EXPECT_NO_THROW({ sock.set_reuse_port(true); });
 	EXPECT_NO_THROW({ sock.set_reuse_port(false); });
 	EXPECT_NO_THROW({ sock.set_reuse_address(true); });

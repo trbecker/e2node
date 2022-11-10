@@ -3,18 +3,30 @@
 #include <string>
 
 namespace e2node {
+
+class sock_info {
+public:
+	sock_info(const std::string &addr, const int port) :
+		addr(addr), port(port) { /* Nothing */ }
+	sock_info(const sock_info &other) :
+		addr(other.addr), port(other.port) { /* Nothing */ }
+
+	const std::string addr;
+	const int port;
+}; /* class sock_info */
+
 class sctp_socket {
 public:
 	static const std::string addr_any;
 
 	sctp_socket();
 	virtual ~sctp_socket();
-	void connect(const std::string &address, const int port);
+	void connect(const sock_info &peer);
+	void bind(const sock_info &peer);
 	int send(const void *buffer, size_t len, int flags=0);
 	int recv(void *buffer, size_t len, int flags=0);
 	void set_reuse_port(bool reuse);
 	void set_reuse_address(bool reuse);
-	void bind(const std::string &address, int port);
 
 private:
 	int _socket;
