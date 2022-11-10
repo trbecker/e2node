@@ -2,7 +2,7 @@
 
 function run_test {
 	if [[ ${VALGRIND} == "y" ]] ; then
-		valgrind="valgrind --tool=memcheck --xml=yes --xml-file=valgrind-result.xml --demangle=yes"
+		valgrind="valgrind --tool=memcheck --xml=yes --xml-file=valgrind-result.xml --demangle=yes --fair-sched=yes"
 	fi
 	$valgrind $1
 }
