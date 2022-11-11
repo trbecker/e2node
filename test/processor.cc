@@ -4,21 +4,27 @@
 #include <chrono>
 #include <iostream>
 
+#include "mock_sctp_socket.h"
+
 using namespace std::chrono_literals;
+using ::testing::_;
 
 void stopper_thread(e2node::processor *processor)
 {
-	std::cout << "Waiting for the trhad to run" << std::endl;
 	while (!processor->is_running())
 		std::this_thread::sleep_for(10ms);
-	std::cout << "Thread detected running" << std::endl;
 	processor->stop();
 }
 
 TEST(ProcessorTest, SimpleTest) {
-	e2node::processor processor;
+	mock_sctp_socket socket;
+	EXPECT_CALL(socket, connect(_)).Times(1);
+
+	e2node::e2 e2impl(&socket);
+
+	e2node::processor processor(&e2impl);
+	e2node::sock_info info("127.0.0.1", 3116);
 	std::thread th(stopper_thread, &processor);
-	std::cout << "About to run the process" << std::endl;
-	processor.run();
+	processor.start(info);
 	th.join();
 }

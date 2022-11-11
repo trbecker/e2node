@@ -1,12 +1,14 @@
 #include <e2node/processor.h>
 
 namespace e2node {
-processor::processor() : running(false) { }
-processor::~processor() { }
+processor::processor(e2 *e2impl) : 
+	running(false), e2impl(e2impl) { /* Nothing */ }
+processor::~processor()
+{ /* Nothing */ }
 
-void processor::run() {
+void processor::start(sock_info &peer) {
 	this->running = true;
-	this->start();
+	this->setup(peer);
 	while (this->running) {
 		this->wait_for_message();
 		this->process_message();
@@ -14,9 +16,9 @@ void processor::run() {
 	this->shutdown();
 }
 
-void processor::start()
+void processor::setup(sock_info &peer)
 {
-	// TBD
+	this->e2impl->connect(peer);
 }
 
 void processor::stop()

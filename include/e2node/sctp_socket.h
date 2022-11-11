@@ -21,12 +21,15 @@ public:
 
 	sctp_socket();
 	virtual ~sctp_socket();
-	void connect(const sock_info &peer);
-	void bind(const sock_info &peer);
-	int send(const void *buffer, size_t len, int flags=0);
-	int recv(void *buffer, size_t len, int flags=0);
+	virtual void connect(const sock_info &peer);
+	virtual void bind(const sock_info &peer);
+	virtual int send(const void *buffer, size_t len, int flags=0);
+	virtual int recv(void *buffer, size_t len, int flags=0);
 	void set_reuse_port(bool reuse);
 	void set_reuse_address(bool reuse);
+
+protected:
+	virtual void set_bool_opt(int level, int optname, bool optval);
 
 private:
 	int _socket;
@@ -34,7 +37,6 @@ private:
 
 	void create();
 
-	void set_bool_opt(int level, int optname, bool optval);
 }; /* class sctp_socket */
 } /* namespace e2node */
 

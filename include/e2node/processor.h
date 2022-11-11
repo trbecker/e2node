@@ -1,5 +1,6 @@
 #ifndef __e2node_processor__
 #define __e2node_processor__
+#include <e2node/e2.h>
 namespace e2node {
 
 /**
@@ -7,21 +8,22 @@ namespace e2node {
  */
 class processor {
 public:
-	processor();
+	processor(e2 *e2impl);
 	virtual ~processor();
 
-	void run();
+	void start(sock_info &peer);
 	void stop();
 	bool is_running();
 
 protected:
-	void start();
+	void setup(sock_info &peer);
 	void wait_for_message();
 	void process_message();
 	void shutdown();
 
 private:
 	bool running;
+	e2 *e2impl;
 };
 
 } /* namespace e2node */
