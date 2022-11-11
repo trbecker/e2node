@@ -34,6 +34,11 @@ TimerManager::~TimerManager()
 
 }
 
+int TimerManager::timerfd_create(int flags)
+{
+	return ::timerfd_create(CLOCK_MONOTONIC, flags);
+}
+
 int TimerManager::createTimer(struct itimerspec *timerSpec, void *timerData) noexcept(false)	
 {
 	/*
@@ -42,7 +47,7 @@ int TimerManager::createTimer(struct itimerspec *timerSpec, void *timerData) noe
 	 * a tick even when the system clock is reset, and not wake up
 	 * the system when the system is suspended.
 	 */
-	int fd = timerfd_create(CLOCK_MONOTONIC, 0);
+	int fd = this->timerfd_create(0);
 	if (fd < 0)
 		throw timer_exception(errno); // GCOVR_EXCL_LINE
 

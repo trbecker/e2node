@@ -24,11 +24,14 @@ private:
 class TimerManager {
 public:
 	TimerManager();
-	~TimerManager();
+	virtual ~TimerManager();
 	int createTimer(int interval_secs, void *timerData) noexcept(false);
 	int createTimer(int interval_secs, int interval_nsecs, void *timerData) noexcept(false);
 	void deleteTimer(int fd);
 	void *getTimerData(int fd);
+
+protected:
+	virtual int timerfd_create(int flags);
 
 private:
 #ifdef TESTING
