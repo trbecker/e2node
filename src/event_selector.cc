@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <cerrno>
 #include <e2node/event_selector.h>
+#include <e2node/errno_exception.h>
 
 using namespace std::chrono_literals;
 
@@ -25,7 +26,7 @@ void event_selector::do_wait(const int timeout)
 	}
 
 	if(this->poll(fds, nfds, timeout) == -1)
-		throw errno; // GCOVR_EXCL_LINE
+		throw poll_exception(errno); // GCOVR_EXCL_LINE
 }
 
 /**

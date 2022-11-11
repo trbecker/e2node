@@ -1,29 +1,13 @@
-#include <e2node/timer_manager.h>
 #include <cstdlib>
 #include <cerrno>
 #include <cstring>
 #include <exception>
 #include <iostream>
 
+#include <e2node/timer_manager.h>
+#include <e2node/errno_exception.h>
 
 namespace e2node {
-class TimerException : public std::exception {
-public:
-	TimerException(const char *err);
-	const char *what();
-private:
-	const char *err;
-};
-
-
-TimerException::TimerException(const char *err) :
-	err(err) { }
-
-const char *TimerException::what() {
-	return this->err;
-}
-
-// class Timer
 Timer::Timer(struct itimerspec *timerSpec, void *timerData, int fd) : fd(fd),
 	timerData(timerData), timerSpec(timerSpec) {}
 
@@ -59,9 +43,8 @@ int TimerManager::createTimer(struct itimerspec *timerSpec, void *timerData) noe
 	 * the system when the system is suspended.
 	 */
 	int fd = timerfd_create(CLOCK_MONOTONIC, 0);
-	if (fd < 0) {
-		throw TimerException(strerror(errno)); // GCOVR_EXCL_LINE
-	}
+	if (fd < 0)
+		throw timer_exception(errno); // GCOVR_EXCL_LINE
 
 	Timer *timer = new Timer(timerSpec, timerData, fd);
 	// Using .insert to raise an exception if the fd is

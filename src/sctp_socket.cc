@@ -8,20 +8,9 @@
 #include <arpa/inet.h> /* inet_addr() */
 
 #include <e2node/sctp_socket.h>
+#include <e2node/errno_exception.h>
 
 namespace e2node {
-class sctp_exception : public std::exception {
-public:
-	sctp_exception(const char *_what) : _what(_what) { }
-	sctp_exception(int err) : _what(strerror(err)) { }
-
-	const char *what() const noexcept override {
-		return this->_what;
-	}
-private:
-	const char *_what;
-};
-
 const std::string sctp_socket::addr_any("any");
 
 sctp_socket::sctp_socket() : up(false)
